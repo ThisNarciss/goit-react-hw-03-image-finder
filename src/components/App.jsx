@@ -1,16 +1,19 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { pixabay } from 'api/pixabay-api';
+import { Component } from 'react';
+
+export class App extends Component {
+  state = {
+    gallery: [],
+    searchName: '',
+  };
+  componentDidMount() {}
+  componentDidUpdate() {}
+
+  render() {
+    return <div></div>;
+  }
+}
+pixabay
+  .fetchGallery(2, 'dog')
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
