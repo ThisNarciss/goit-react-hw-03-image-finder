@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { pixabay } from 'api/pixabay-api';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -14,7 +14,16 @@ export class App extends Component {
     loading: false,
     totalHits: 0,
   };
-  componentDidUpdate(prevProps, prevState) {
+  listRef = React.createRef();
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    if (prevState.gallery.length < this.state.gallery.length) {
+      const list = this.listRef.current;
+      console.log(list);
+      return list.scrollHeight - list.scrollTop;
+    }
+    return null;
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
     const { page, search } = this.state;
 
     if ((page !== prevState.page || search) !== prevState.search) {
@@ -34,6 +43,14 @@ export class App extends Component {
         .catch(error => console.log(error))
         .finally(() => this.setState({ loading: false }));
     }
+    if (snapshot !== null) {
+      const list = this.listRef.current;
+
+      window.scrollBy({
+        top: (list.scrollTop = list.scrollHeight - snapshot),
+        behavior: 'smooth',
+      });
+    }
   }
 
   handleLoadMore = () => {
@@ -52,7 +69,10 @@ export class App extends Component {
       <AppBox>
         <Searchbar onSubmit={this.handleSubmit} />
         {loading && <Loader />}
-        <ImageGallery gallery={gallery} />
+        <div ref={this.listRef}>
+          <ImageGallery gallery={gallery} />
+        </div>
+
         {Boolean(gallery.length) && gallery.length !== totalHits && (
           <Button onBtnClick={this.handleLoadMore} />
         )}

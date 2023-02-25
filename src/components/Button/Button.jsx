@@ -1,4 +1,4 @@
-import { FaBeer } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import { LoadMore } from './Button.styled';
 
 export function Button({ onBtnClick }) {
@@ -8,3 +8,7 @@ export function Button({ onBtnClick }) {
     </LoadMore>
   );
 }
+
+Button.propTypes = {
+  onBtnClick: PropTypes.func.isRequired,
+};

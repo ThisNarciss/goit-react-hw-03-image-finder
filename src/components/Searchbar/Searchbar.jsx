@@ -1,4 +1,6 @@
 import { Formik } from 'formik';
+import PropTypes from 'prop-types';
+import { FcSearch } from 'react-icons/fc';
 import * as Yup from 'yup';
 import {
   SearchBarBox,
@@ -34,6 +36,7 @@ export function Searchbar({ onSubmit }) {
       >
         <Form>
           <FormBtn type="submit">
+            <FcSearch size={30} />
             <BtnLabel>Search</BtnLabel>
           </FormBtn>
 
@@ -49,3 +52,7 @@ export function Searchbar({ onSubmit }) {
     </SearchBarBox>
   );
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
