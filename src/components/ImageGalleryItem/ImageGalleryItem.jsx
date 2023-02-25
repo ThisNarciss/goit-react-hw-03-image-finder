@@ -22,7 +22,9 @@ export class ImageGalleryItem extends Component {
           loading="lazy"
           onClick={this.toggleModal}
         />
-        {showModal && <Modal largeImg={largeImageURL} />}
+        {showModal && (
+          <Modal largeImg={largeImageURL} onBackdropClick={this.toggleModal} />
+        )}
       </GalleryItem>
     );
   }

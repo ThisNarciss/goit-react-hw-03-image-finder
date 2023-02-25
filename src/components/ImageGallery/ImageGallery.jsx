@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-
 import { Gallery } from './ImageGallery.styled';
 
 export function ImageGallery({ gallery }) {
@@ -14,3 +14,9 @@ export function ImageGallery({ gallery }) {
     </>
   );
 }
+
+ImageGallery.propTypes = {
+  gallery: PropTypes.arrayOf(
+    PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired
+  ).isRequired,
+};

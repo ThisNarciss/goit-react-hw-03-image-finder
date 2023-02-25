@@ -24,6 +24,7 @@ export class App extends Component {
         .fetchGallery(page, search)
         .then(({ hits, totalHits }) =>
           this.setState(prevState => {
+            console.log(totalHits);
             return {
               gallery: [...prevState.gallery, ...hits],
               totalHits,

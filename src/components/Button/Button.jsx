@@ -1,3 +1,4 @@
+import { FaBeer } from 'react-icons/fa';
 import { LoadMore } from './Button.styled';
 
 export function Button({ onBtnClick }) {
