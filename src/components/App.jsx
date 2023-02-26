@@ -14,15 +14,17 @@ export class App extends Component {
     loading: false,
     totalHits: 0,
   };
+
   listRef = React.createRef();
+
   getSnapshotBeforeUpdate(prevProps, prevState) {
     if (prevState.gallery.length < this.state.gallery.length) {
       const list = this.listRef.current;
-      console.log(list);
       return list.scrollHeight - list.scrollTop;
     }
     return null;
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { page, search } = this.state;
 
@@ -33,7 +35,6 @@ export class App extends Component {
         .fetchGallery(page, search)
         .then(({ hits, totalHits }) =>
           this.setState(prevState => {
-            console.log(totalHits);
             return {
               gallery: [...prevState.gallery, ...hits],
               totalHits,
@@ -47,7 +48,7 @@ export class App extends Component {
       const list = this.listRef.current;
 
       window.scrollBy({
-        top: (list.scrollTop = list.scrollHeight - snapshot),
+        top: (list.scrollTop = list.scrollHeight - snapshot + 90),
         behavior: 'smooth',
       });
     }
@@ -64,18 +65,20 @@ export class App extends Component {
 
   render() {
     const { gallery, loading, totalHits } = this.state;
-    console.log(gallery.length);
+
     return (
       <AppBox>
         <Searchbar onSubmit={this.handleSubmit} />
-        {loading && <Loader />}
-        <div ref={this.listRef}>
-          <ImageGallery gallery={gallery} />
-        </div>
-
-        {Boolean(gallery.length) && gallery.length !== totalHits && (
-          <Button onBtnClick={this.handleLoadMore} />
-        )}
+        <section ref={this.listRef}>
+          {Boolean(gallery.length) && (
+            <ImageGallery gallery={gallery}>
+              {loading && <Loader />}
+              {Boolean(gallery.length) && gallery.length !== totalHits && (
+                <Button onBtnClick={this.handleLoadMore} />
+              )}
+            </ImageGallery>
+          )}
+        </section>
       </AppBox>
     );
   }

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { Form as FormSubmit, Field as FieldSearch } from 'formik';
+import {
+  Form as FormSubmit,
+  Field as FieldSearch,
+  ErrorMessage as FormErrorMessage,
+} from 'formik';
 
 export const SearchBarBox = styled.header`
   top: 0;
@@ -21,6 +25,7 @@ export const SearchBarBox = styled.header`
 `;
 
 export const Form = styled(FormSubmit)`
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -37,8 +42,8 @@ export const Field = styled(FieldSearch)`
   font-size: 20px;
   border: none;
   outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 70px;
+  padding-right: 70px;
   ::placeholder {
     font: inherit;
     font-size: 18px;
@@ -70,4 +75,11 @@ export const BtnLabel = styled.span`
   white-space: nowrap;
   clip-path: inset(50%);
   border: 0;
+`;
+
+export const ErrorMessage = styled(FormErrorMessage)`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: red;
 `;

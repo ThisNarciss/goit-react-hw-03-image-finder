@@ -2,14 +2,17 @@ import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Gallery } from './ImageGallery.styled';
 
-export function ImageGallery({ gallery }) {
+export function ImageGallery({ gallery, children }) {
   return (
-    <Gallery>
-      {gallery &&
-        gallery.map(item => {
-          return <ImageGalleryItem key={item.id} item={item} />;
-        })}
-    </Gallery>
+    <>
+      <Gallery>
+        {gallery &&
+          gallery.map(item => {
+            return <ImageGalleryItem key={item.id} item={item} />;
+          })}
+      </Gallery>
+      {children}
+    </>
   );
 }
 

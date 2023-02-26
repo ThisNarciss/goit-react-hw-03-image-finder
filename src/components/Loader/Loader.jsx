@@ -1,18 +1,19 @@
-import { Grid } from 'react-loader-spinner';
+import { ListLoader } from './Loader.styled';
+import { ThreeDots } from 'react-loader-spinner';
 
 export function Loader() {
   return (
-    <li>
-      <Grid
-        height="200"
-        width="200"
-        color="#4fa94d"
-        ariaLabel="grid-loading"
-        radius="12.5"
+    <ListLoader>
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#3f51b5"
+        ariaLabel="three-dots-loading"
         wrapperStyle={{}}
-        wrapperClass=""
+        wrapperClassName=""
         visible={true}
       />
-    </li>
+    </ListLoader>
   );
 }

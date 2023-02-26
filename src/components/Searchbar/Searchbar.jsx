@@ -8,12 +8,13 @@ import {
   Field,
   FormBtn,
   BtnLabel,
+  ErrorMessage,
 } from './Searchbar.styled';
 
 const schema = Yup.object().shape({
   search: Yup.string()
     .trim()
-    .min(1, 'Too Short!')
+    .min(2, 'Too Short!')
     .max(70, 'Too Long!')
     .required('Required'),
 });
@@ -47,6 +48,7 @@ export function Searchbar({ onSubmit }) {
             autoFocus
             placeholder="Search images and photos"
           />
+          <ErrorMessage name="search" component="p" />
         </Form>
       </Formik>
     </SearchBarBox>
