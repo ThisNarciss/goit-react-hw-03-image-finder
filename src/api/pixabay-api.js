@@ -21,15 +21,12 @@ function fetchGallery(page, topic) {
     .then(data => {
       const { hits, totalHits } = data;
 
-      const images = hits.map(
-        ({ id, largeImageURL, webformatURL, tags }, idx) => ({
-          id,
-          largeImageURL,
-          webformatURL,
-          tags,
-          itemToScroll: !idx,
-        })
-      );
+      const images = hits.map(({ id, largeImageURL, webformatURL, tags }) => ({
+        id,
+        largeImageURL,
+        webformatURL,
+        tags,
+      }));
       return { images, totalHits };
     });
 }
