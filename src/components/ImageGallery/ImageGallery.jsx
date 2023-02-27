@@ -8,6 +8,7 @@ export class ImageGallery extends Component {
     gallery: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired
     ).isRequired,
+    children: PropTypes.node,
   };
 
   listRef = React.createRef(null);
