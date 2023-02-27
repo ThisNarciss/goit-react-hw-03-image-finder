@@ -15,42 +15,24 @@ export class App extends Component {
     totalHits: 0,
   };
 
-  listRef = React.createRef();
-
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    if (prevState.gallery.length < this.state.gallery.length) {
-      const list = this.listRef.current;
-      return list.scrollHeight - list.scrollTop;
-    }
-    return null;
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState) {
     const { page, search } = this.state;
 
-    if ((page !== prevState.page || search) !== prevState.search) {
+    if (page !== prevState.page || search !== prevState.search) {
       this.setState({ loading: true });
 
       pixabay
         .fetchGallery(page, search)
-        .then(({ hits, totalHits }) =>
+        .then(({ images, totalHits }) =>
           this.setState(prevState => {
             return {
-              gallery: [...prevState.gallery, ...hits],
+              gallery: [...prevState.gallery, ...images],
               totalHits,
             };
           })
         )
         .catch(error => console.log(error))
         .finally(() => this.setState({ loading: false }));
-    }
-    if (snapshot !== null) {
-      const list = this.listRef.current;
-
-      window.scrollBy({
-        top: (list.scrollTop = list.scrollHeight - snapshot + 90),
-        behavior: 'smooth',
-      });
     }
   }
 
@@ -64,12 +46,13 @@ export class App extends Component {
     this.setState({ page: 1, search: values.search, gallery: [] });
 
   render() {
-    const { gallery, loading, totalHits } = this.state;
+    const { gallery, loading, totalHits, page } = this.state;
 
     return (
       <AppBox>
         <Searchbar onSubmit={this.handleSubmit} />
-        <section ref={this.listRef}>
+        <section>
+          {loading && page === 1 && <Loader />}
           {Boolean(gallery.length) && (
             <ImageGallery gallery={gallery}>
               {loading && <Loader />}

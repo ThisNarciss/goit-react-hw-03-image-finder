@@ -1,5 +1,5 @@
 import { Modal } from 'components/Modal/Modal';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
@@ -16,10 +16,8 @@ export class ImageGalleryItem extends Component {
     showModal: false,
   };
 
-  toggleModal = evt => {
-    if (evt.currentTarget === evt.target) {
-      this.setState(({ showModal }) => ({ showModal: !showModal }));
-    }
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
   render() {
@@ -27,6 +25,7 @@ export class ImageGalleryItem extends Component {
     const {
       item: { webformatURL, largeImageURL, tags },
     } = this.props;
+
     return (
       <GalleryItem>
         <GalleryItemImage
@@ -39,7 +38,7 @@ export class ImageGalleryItem extends Component {
           <Modal
             tag={tags}
             largeImg={largeImageURL}
-            onBackdropClick={this.toggleModal}
+            onModalClose={this.toggleModal}
           />
         )}
       </GalleryItem>

@@ -11,12 +11,27 @@ function fetchGallery(page, topic) {
     page: page,
     per_page: 12,
   });
-  return fetch(`${FETCH_URL}?${searchParams}`).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
+  return fetch(`${FETCH_URL}?${searchParams}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const { hits, totalHits } = data;
+
+      const images = hits.map(
+        ({ id, largeImageURL, webformatURL, tags }, idx) => ({
+          id,
+          largeImageURL,
+          webformatURL,
+          tags,
+          itemToScroll: !idx,
+        })
+      );
+      return { images, totalHits };
+    });
 }
 
 const pixabay = {
